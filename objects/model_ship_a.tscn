@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://buv83222oxvpe"]
+
+[ext_resource type="Material" uid="uid://dh8n0qm6hoe8i" path="res://materials/BaseGrey.tres" id="1_4lbpl"]
+[ext_resource type="Material" uid="uid://d2amv4s08v3rm" path="res://materials/BaseEngine.tres" id="2_41ola"]
+[ext_resource type="Material" uid="uid://c6ssl1vtbn022" path="res://materials/BaseAccessory.tres" id="3_vtpms"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_lnbmg"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_jy3y2"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_pqmp1"]
+
+[node name="Model_ShipA" type="Node3D"]
+
+[node name="Visual" type="Node3D" parent="."]
+
+[node name="Body" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -0.3, 0, 1, -1.31134e-08, 0, 0, 0)
+material_override = ExtResource("1_4lbpl")
+mesh = SubResource("CapsuleMesh_lnbmg")
+skeleton = NodePath("../..")
+
+[node name="Engine1" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-1.09278e-08, -0.25, 0, 0.25, -1.09278e-08, 0, 0, 0, 0.125, -0.2, 0, 0.95)
+material_override = ExtResource("2_41ola")
+mesh = SubResource("PrismMesh_jy3y2")
+
+[node name="Engine2" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-1.09278e-08, 0.25, 0, -0.25, -1.09278e-08, 0, 0, 0, 0.125, 0.2, 0, 0.95)
+material_override = ExtResource("2_41ola")
+mesh = SubResource("PrismMesh_jy3y2")
+skeleton = NodePath("../Engine1")
+
+[node name="Nose" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.6, 0, 0, -1.24282)
+material_override = ExtResource("3_vtpms")
+mesh = SubResource("BoxMesh_pqmp1")
