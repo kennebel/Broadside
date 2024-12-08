@@ -11,7 +11,8 @@ config_version=5
 [application]
 
 config/name="Broadside"
-config/features=PackedStringArray("4.3")
+run/main_scene="res://scenes/world_battle.tscn"
+config/features=PackedStringArray("4.3", "C#")
 config/icon="res://icon.svg"
 
 [dotnet]
