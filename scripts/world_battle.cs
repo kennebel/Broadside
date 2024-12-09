@@ -13,6 +13,11 @@ public partial class world_battle : Node3D
 	[Export]
 	public string StarObject { get; set; }
 
+	[Export]
+	public Button ButtonSpawn { get; set; }
+	[Export]
+	public Button ButtonClear { get; set; }
+
 	private List<Node3D> LoadedObjects { get; set; }
 
 	// Called when the node enters the scene tree for the first time.
@@ -32,8 +37,10 @@ public partial class world_battle : Node3D
 			star_holder.AddChild(temp_star);
 		}
 
-		// Temp
-		SpawnIn();
+		ButtonSpawn.Pressed += SpawnIn;
+		ButtonClear.Pressed += CleanUp;
+
+		ButtonClear.Disabled = true;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -43,6 +50,9 @@ public partial class world_battle : Node3D
 
 	public void SpawnIn()
 	{
+		ButtonSpawn.Disabled = true;
+		ButtonClear.Disabled = false;
+
 		var scene = GD.Load<PackedScene>("res://objects/"+TestObject+".tscn");
 
 		LoadedObjects.Add(scene.Instantiate<Node3D>());
@@ -65,6 +75,9 @@ public partial class world_battle : Node3D
 			RemoveChild(Item);
 		}
 		LoadedObjects.Clear();
+
+		ButtonSpawn.Disabled = false;
+		ButtonClear.Disabled = true;
 	}
 
 	static public Vector3 OnUnitSphere()

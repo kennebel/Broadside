@@ -7,12 +7,14 @@
 [sub_resource type="Environment" id="Environment_6pqvn"]
 background_mode = 1
 
-[node name="world_battle" type="Node3D" node_paths=PackedStringArray("SpawnPos0", "SpawnPos1")]
+[node name="world_battle" type="Node3D" node_paths=PackedStringArray("SpawnPos0", "SpawnPos1", "ButtonSpawn", "ButtonClear")]
 script = ExtResource("1_lf2q0")
 TestObject = "model_ship_a"
 SpawnPos0 = NodePath("SpawnPos0")
 SpawnPos1 = NodePath("SpawnPos1")
 StarObject = "model_star"
+ButtonSpawn = NodePath("CanvasLayer/HBoxContainer/ButtonSpawn")
+ButtonClear = NodePath("CanvasLayer/HBoxContainer/ButtonClear")
 
 [node name="SpawnPos0" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 0)
@@ -36,3 +38,23 @@ transform = Transform3D(1, 0, 0, 0, 0.831789, 0.555091, 0, -0.555091, 0.831789, 
 environment = SubResource("Environment_6pqvn")
 
 [node name="StarHolder" type="Node3D" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 205.0
+offset_bottom = 50.0
+
+[node name="LabelInfo" type="Label" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+text = "Broadside"
+
+[node name="ButtonSpawn" type="Button" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+text = "Spawn"
+
+[node name="ButtonClear" type="Button" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+text = "Clear"
