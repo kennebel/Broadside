@@ -10,6 +10,8 @@ public partial class world_battle : Node3D
 	public Node3D SpawnPos0 { get; set; }
 	[Export]
 	public Node3D SpawnPos1 { get; set; }
+	[Export]
+	public string StarObject { get; set; }
 
 	private List<Node3D> LoadedObjects { get; set; }
 
@@ -17,6 +19,18 @@ public partial class world_battle : Node3D
 	public override void _Ready()
 	{
 		LoadedObjects = new List<Node3D>();
+		GD.Randomize();
+
+		var star_scene = GD.Load<PackedScene>("res://objects/"+StarObject+".tscn");
+		Node3D temp_star;
+		var star_holder = GetNode("StarHolder");
+		for (int i = 0; i < 99; i++)
+		{
+			temp_star = star_scene.Instantiate<Node3D>();
+			temp_star.Name = "Star_"+i.ToString();
+			temp_star.Position = OnUnitSphere() * 25;
+			star_holder.AddChild(temp_star);
+		}
 
 		// Temp
 		SpawnIn();
@@ -51,5 +65,11 @@ public partial class world_battle : Node3D
 			RemoveChild(Item);
 		}
 		LoadedObjects.Clear();
+	}
+
+	static public Vector3 OnUnitSphere()
+	{
+		var ret = new Vector3((float)GD.Randfn(0,1),(float)GD.Randfn(0,1),(float)GD.Randfn(0,1));
+		return ret.Normalized();
 	}
 }

@@ -1,14 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://cnrl8xadwusq3"]
+[gd_scene load_steps=4 format=3 uid="uid://cnrl8xadwusq3"]
 
 [ext_resource type="Script" path="res://scripts/world_battle.cs" id="1_lf2q0"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_tgwsf"]
+
+[sub_resource type="Environment" id="Environment_6pqvn"]
+background_mode = 1
 
 [node name="world_battle" type="Node3D" node_paths=PackedStringArray("SpawnPos0", "SpawnPos1")]
 script = ExtResource("1_lf2q0")
 TestObject = "model_ship_a"
 SpawnPos0 = NodePath("SpawnPos0")
 SpawnPos1 = NodePath("SpawnPos1")
+StarObject = "model_star"
 
 [node name="SpawnPos0" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 0)
@@ -29,3 +33,6 @@ transform = Transform3D(1, 0, 0, 0, 0.672263, 0.740312, 0, -0.740312, 0.672263, 
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.831789, 0.555091, 0, -0.555091, 0.831789, 0, 2.94683, 4.52325)
+environment = SubResource("Environment_6pqvn")
+
+[node name="StarHolder" type="Node3D" parent="."]
