@@ -1,8 +1,11 @@
 using Godot;
 using System;
+using TheGame;
 
 public partial class MainMenu : Node
 {
+	[Export]
+	public Resource GC { get; set; }
 	//[Export]
 	//public string InterestItemResFolder { get; set; }
 	[Export]
@@ -35,6 +38,17 @@ public partial class MainMenu : Node
 
 		ButtonBattle.Pressed += LoadBattle;
 		ButtonExit.Pressed += ButtonExit_Trigger;
+
+		var LabelGame = GetNode<Label>("TopMenu/Control/VBoxContainer/LabelGame");
+		var LabelPlayer = GetNode<Label>("TopMenu/Control/VBoxContainer/LabelPlayer");
+		var LabelVersion = GetNode<Label>("TopMenu/Control/VBoxContainer/LabelVersion");
+
+		if (GC is GameConfig gc)
+		{
+			LabelGame.Text = GameConfig.GameName;
+			LabelPlayer.Text = String.Format("Player: {0}", String.IsNullOrEmpty(gc.PlayerName) ? "<setup in Options>" : gc.PlayerName);
+			LabelVersion.Text = String.Format("Version: {0}", GameConfig.GameVersion);
+		}
 	}
 
 	public override void _Process(double delta)

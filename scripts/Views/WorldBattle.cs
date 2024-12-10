@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class world_battle : Node3D
+public partial class WorldBattle : Node3D
 {
 	[Export]
 	public string TestObject { get; set; }

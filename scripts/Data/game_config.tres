@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="GameConfig" load_steps=2 format=3 uid="uid://8l3vlciaiv6a"]
+
+[ext_resource type="Script" path="res://scripts/Data/GameConfig.cs" id="1_xssik"]
+
+[resource]
+script = ExtResource("1_xssik")
+PlayerName = "kennebel"
