@@ -39,9 +39,9 @@ public partial class MainMenu : Node
 		ButtonBattle.Pressed += LoadBattle;
 		ButtonExit.Pressed += ButtonExit_Trigger;
 
-		var LabelGame = GetNode<Label>("TopMenu/Control/VBoxContainer/LabelGame");
-		var LabelPlayer = GetNode<Label>("TopMenu/Control/VBoxContainer/LabelPlayer");
-		var LabelVersion = GetNode<Label>("TopMenu/Control/VBoxContainer/LabelVersion");
+		var LabelGame = GetNode<Label>("TopMenu/VBoxContainer/LabelGame");
+		var LabelPlayer = GetNode<Label>("TopMenu/VBoxContainer/LabelPlayer");
+		var LabelVersion = GetNode<Label>("TopMenu/VBoxContainer/LabelVersion");
 
 		if (GC is GameConfig gc)
 		{
