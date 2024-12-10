@@ -17,10 +17,13 @@ public partial class world_battle : Node3D
 	public Button ButtonSpawn { get; set; }
 	[Export]
 	public Button ButtonClear { get; set; }
+	[Export]
+	public Button ButtonPause { get; set; }
+	[Export]
+	public Button ButtonMainMenu { get; set; }
 
 	private List<Node3D> LoadedObjects { get; set; }
 
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		LoadedObjects = new List<Node3D>();
@@ -39,11 +42,12 @@ public partial class world_battle : Node3D
 
 		ButtonSpawn.Pressed += SpawnIn;
 		ButtonClear.Pressed += CleanUp;
+		ButtonPause.Pressed += PauseBattle;
+		ButtonMainMenu.Pressed += ReturnToMainMenu;
 
 		ButtonClear.Disabled = true;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
 	}
@@ -78,6 +82,17 @@ public partial class world_battle : Node3D
 
 		ButtonSpawn.Disabled = false;
 		ButtonClear.Disabled = true;
+	}
+
+	public void PauseBattle()
+	{
+		// TBD
+	}
+
+	public void ReturnToMainMenu()
+	{
+		var main_menu = GD.Load<PackedScene>("res://scenes/main_menu.tscn");
+		GetTree().ChangeSceneToPacked(main_menu);
 	}
 
 	static public Vector3 OnUnitSphere()
