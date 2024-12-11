@@ -61,8 +61,8 @@ public partial class MainMenu : Node
 
 	public override void _Notification(int what)
 	{
-    	if (what == NotificationWMCloseRequest)
-        	GetTree().Quit(); // default behavior
+		if (what == NotificationWMCloseRequest)
+			GetTree().Quit(); // default behavior
 	}
 
 	public void LoadBattle()
