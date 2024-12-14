@@ -1,0 +1,112 @@
+[gd_scene load_steps=4 format=3 uid="uid://3lwepav3xdjv"]
+
+[ext_resource type="Script" path="res://scripts/Views/TheGame.cs" id="1_vonxe"]
+[ext_resource type="Resource" uid="uid://8l3vlciaiv6a" path="res://scripts/Data/game_config.tres" id="2_nl28y"]
+
+[sub_resource type="Environment" id="Environment_5mjmb"]
+background_mode = 1
+background_color = Color(0, 0, 0.313726, 1)
+
+[node name="game" type="Node3D" node_paths=PackedStringArray("Overlay", "MainMenu", "BattleArea", "ButtonBattle", "ButtonOptions", "ButtonExit")]
+script = ExtResource("1_vonxe")
+GC = ExtResource("2_nl28y")
+Overlay = NodePath("TransitionOverlay/Overlay")
+MainMenu = NodePath("MainMenu")
+BattleArea = NodePath("BattleArea")
+InterestRotate = 2.0
+ButtonBattle = NodePath("MainMenu/TopMenu/VBoxContainer/ButtonBattle")
+ButtonOptions = NodePath("MainMenu/TopMenu/VBoxContainer/ButtonOptions")
+ButtonExit = NodePath("MainMenu/TopMenu/VBoxContainer/ButtonExit")
+
+[node name="TransitionOverlay" type="CanvasLayer" parent="."]
+
+[node name="Overlay" type="ColorRect" parent="TransitionOverlay"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
+[node name="MainMenu" type="Node3D" parent="."]
+
+[node name="CameraRig" type="Node3D" parent="MainMenu"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 2, 2)
+
+[node name="Camera3D" type="Camera3D" parent="MainMenu/CameraRig"]
+environment = SubResource("Environment_5mjmb")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="MainMenu/CameraRig"]
+
+[node name="TopMenu" type="CanvasLayer" parent="MainMenu"]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/TopMenu"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.0
+offset_top = -91.0
+offset_right = 43.0
+offset_bottom = 91.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LabelGame" type="Label" parent="MainMenu/TopMenu/VBoxContainer"]
+layout_mode = 2
+text = "Broadside"
+
+[node name="LabelPlayer" type="Label" parent="MainMenu/TopMenu/VBoxContainer"]
+layout_mode = 2
+
+[node name="ButtonBattle" type="Button" parent="MainMenu/TopMenu/VBoxContainer"]
+layout_mode = 2
+text = "Battle!"
+
+[node name="ButtonOptions" type="Button" parent="MainMenu/TopMenu/VBoxContainer"]
+layout_mode = 2
+text = "Options"
+
+[node name="ButtonExit" type="Button" parent="MainMenu/TopMenu/VBoxContainer"]
+layout_mode = 2
+text = "Exit"
+
+[node name="LabelVersion" type="Label" parent="MainMenu/TopMenu/VBoxContainer"]
+layout_mode = 2
+text = "Version 0.1"
+
+[node name="OptionsMenu" type="CanvasLayer" parent="MainMenu"]
+visible = false
+
+[node name="BattleMenu" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BattleMenu"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 205.0
+offset_bottom = 50.0
+
+[node name="LabelInfo" type="Label" parent="BattleMenu/HBoxContainer"]
+layout_mode = 2
+text = "Broadside 0.1"
+
+[node name="ButtonSpawn" type="Button" parent="BattleMenu/HBoxContainer"]
+layout_mode = 2
+text = "Spawn"
+
+[node name="ButtonClear" type="Button" parent="BattleMenu/HBoxContainer"]
+layout_mode = 2
+text = "Clear"
+
+[node name="ButtonPause" type="Button" parent="BattleMenu/HBoxContainer"]
+layout_mode = 2
+text = "Pause"
+
+[node name="ButtonMainMenu" type="Button" parent="BattleMenu/HBoxContainer"]
+layout_mode = 2
+text = "Main"
+
+[node name="BattleArea" type="Node3D" parent="."]
+visible = false

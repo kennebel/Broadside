@@ -2,10 +2,21 @@ using Godot;
 using System;
 using TheGameData;
 
-public partial class MainMenu : Node
+
+public partial class TheGame : Node
 {
+	public enum State { Transition, Menu, Battle }
+
 	[Export]
 	public Resource GC { get; set; }
+
+	[Export]
+	public ColorRect Overlay { get; set; }
+	[Export]
+	public Node3D MainMenu { get; set; }
+	[Export]
+	public Node3D BattleArea { get; set; }
+
 	//[Export]
 	//public string InterestItemResFolder { get; set; }
 	[Export]
@@ -24,6 +35,8 @@ public partial class MainMenu : Node
 	private float _InterestRotate = 5f;
 	protected Node3D InterestItem { get; set; }
 
+	protected State CurrentState { get; set; }
+
 	public override void _Ready()
 	{
 		//if (String.IsNullOrEmpty(InterestItemResFolder)) { InterestItemResFolder = "objects"; }
@@ -37,11 +50,12 @@ public partial class MainMenu : Node
 		AddChild(InterestItem);
 
 		ButtonBattle.Pressed += LoadBattle;
+		//ButtonOptions.Pressed += ???;
 		ButtonExit.Pressed += ButtonExit_Trigger;
 
-		var LabelGame = GetNode<Label>("TopMenu/VBoxContainer/LabelGame");
-		var LabelPlayer = GetNode<Label>("TopMenu/VBoxContainer/LabelPlayer");
-		var LabelVersion = GetNode<Label>("TopMenu/VBoxContainer/LabelVersion");
+		var LabelGame = GetNode<Label>("MainMenu/TopMenu/VBoxContainer/LabelGame");
+		var LabelPlayer = GetNode<Label>("MainMenu/TopMenu/VBoxContainer/LabelPlayer");
+		var LabelVersion = GetNode<Label>("MainMenu/TopMenu/VBoxContainer/LabelVersion");
 
 		if (GC is GameConfig gc)
 		{
@@ -49,13 +63,22 @@ public partial class MainMenu : Node
 			LabelPlayer.Text = String.Format("Player: {0}", String.IsNullOrEmpty(gc.PlayerName) ? "<setup in Options>" : gc.PlayerName);
 			LabelVersion.Text = String.Format("Version: {0}", GameConfig.GameVersion);
 		}
+
+		CurrentState = State.Menu;
 	}
 
 	public override void _Process(double delta)
 	{
-		if (InterestItem != null)
+		if (CurrentState == State.Menu)
 		{
-			InterestItem.RotateObjectLocal(Vector3.Up, (float)delta * InterestRotate);
+			if (InterestItem != null)
+			{
+				InterestItem.RotateObjectLocal(Vector3.Up, (float)delta * InterestRotate);
+			}
+		}
+		else if (CurrentState == State.Transition)
+		{
+
 		}
 	}
 
@@ -67,8 +90,9 @@ public partial class MainMenu : Node
 
 	public void LoadBattle()
 	{
-		var world_battle = GD.Load<PackedScene>("res://scenes/world_battle.tscn");
-		GetTree().ChangeSceneToPacked(world_battle);
+		
+		//var world_battle = GD.Load<PackedScene>("res://scenes/world_battle.tscn");
+		//GetTree().ChangeSceneToPacked(world_battle);
 	}
 
 	public void ButtonExit_Trigger()

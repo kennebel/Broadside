@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-namespace TheGame
+namespace TheGameData
 {
     [GlobalClass]
     public partial class GameConfig : Resource
