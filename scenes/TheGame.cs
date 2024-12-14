@@ -2,7 +2,6 @@ using Godot;
 using System;
 using TheGameData;
 
-
 public partial class TheGame : Node
 {
 	public enum State { Transition, Menu, Battle }
@@ -11,8 +10,6 @@ public partial class TheGame : Node
 	[Export]
 	public Resource GC { get; set; }
 
-	[Export]
-	public ColorRect Overlay { get; set; }
 	[Export]
 	public Node3D MainMenu { get; set; }
 	[Export]
@@ -23,6 +20,8 @@ public partial class TheGame : Node
 	//public string InterestItemResFolder { get; set; }
 	[Export(PropertyHint.Range, "-5,5,0.25")]
 	public float InterestRotateSpeed { get; set; } = 2f;
+	[Export(PropertyHint.Range, "0.1,15,0.1")]
+	public float OverlayAnimationDuration { get; set; } = 5f;
 	[Export]
 	public Button ButtonBattle { get; set; }
 	[Export]
@@ -35,6 +34,8 @@ public partial class TheGame : Node
 
 	// Menu
 	protected Node3D InterestItem { get; set; }
+	protected TransitionOverlay Overlay { get; set; }
+	protected CanvasLayer OverlayVisual { get; set; }
 
 	// Overrides
 	public override void _Ready()
@@ -56,6 +57,8 @@ public partial class TheGame : Node
 		var LabelGame = GetNode<Label>("MainMenu/TopMenu/VBoxContainer/LabelGame");
 		var LabelPlayer = GetNode<Label>("MainMenu/TopMenu/VBoxContainer/LabelPlayer");
 		var LabelVersion = GetNode<Label>("MainMenu/TopMenu/VBoxContainer/LabelVersion");
+		Overlay = GetNode<TransitionOverlay>("TransitionOverlay");
+		OverlayVisual = GetNode<CanvasLayer>("TransitionOverlay");
 
 		if (GC is GameConfig gc)
 		{
@@ -91,7 +94,9 @@ public partial class TheGame : Node
 	// Menu
 	public void ButtonBattle_Trigger()
 	{
-		
+		OverlayVisual.Visible = true;
+		Overlay.StartAnimation(OverlayAnimationEnd, OverlayAnimationHalf, OverlayAnimationDuration);
+
 		//var world_battle = GD.Load<PackedScene>("res://scenes/world_battle.tscn");
 		//GetTree().ChangeSceneToPacked(world_battle);
 	}
@@ -104,5 +109,28 @@ public partial class TheGame : Node
 	public void ButtonExit_Trigger()
 	{
 		GetTree().Root.PropagateNotification((int)NotificationWMCloseRequest);
+	}
+
+	public void OverlayAnimationHalf()
+	{
+		if (MainMenu.Visible)
+		{
+			// Hide main menu
+			MainMenu.Visible = false;
+			
+			// Activate Battle
+		}
+		else
+		{
+			// Deactivate Battle
+
+			// Show main menu
+			MainMenu.Visible = true;
+		}
+	}
+
+	public void OverlayAnimationEnd()
+	{
+		OverlayVisual.Visible = false;
 	}
 }

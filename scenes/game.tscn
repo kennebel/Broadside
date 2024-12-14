@@ -1,17 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://3lwepav3xdjv"]
+[gd_scene load_steps=5 format=3 uid="uid://3lwepav3xdjv"]
 
-[ext_resource type="Script" path="res://scripts/Views/TheGame.cs" id="1_vonxe"]
+[ext_resource type="Script" path="res://scenes/TheGame.cs" id="1_vonxe"]
 [ext_resource type="Resource" uid="uid://8l3vlciaiv6a" path="res://scripts/Data/game_config.tres" id="2_nl28y"]
+[ext_resource type="Script" path="res://scenes/menus/TransitionOverlay.cs" id="3_c33cj"]
 
 [sub_resource type="Environment" id="Environment_5mjmb"]
 background_mode = 1
 background_color = Color(0, 0, 0.313726, 1)
 
-[node name="game" type="Node3D" node_paths=PackedStringArray("Overlay", "MainMenu", "BattleArea", "ButtonBattle", "ButtonOptions", "ButtonExit")]
+[node name="game" type="Node3D" node_paths=PackedStringArray("MainMenu", "BattleArea", "ButtonBattle", "ButtonOptions", "ButtonExit")]
 script = ExtResource("1_vonxe")
 GC = ExtResource("2_nl28y")
-InterestRotate = 2.0
-Overlay = NodePath("TransitionOverlay/Overlay")
 MainMenu = NodePath("MainMenu")
 BattleArea = NodePath("BattleArea")
 ButtonBattle = NodePath("MainMenu/TopMenu/VBoxContainer/ButtonBattle")
@@ -19,6 +18,9 @@ ButtonOptions = NodePath("MainMenu/TopMenu/VBoxContainer/ButtonOptions")
 ButtonExit = NodePath("MainMenu/TopMenu/VBoxContainer/ButtonExit")
 
 [node name="TransitionOverlay" type="CanvasLayer" parent="."]
+layer = 2
+visible = false
+script = ExtResource("3_c33cj")
 
 [node name="Overlay" type="ColorRect" parent="TransitionOverlay"]
 anchors_preset = 15
