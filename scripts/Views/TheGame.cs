@@ -7,6 +7,7 @@ public partial class TheGame : Node
 {
 	public enum State { Transition, Menu, Battle }
 
+	[ExportGroup("Main")]
 	[Export]
 	public Resource GC { get; set; }
 
@@ -17,14 +18,11 @@ public partial class TheGame : Node
 	[Export]
 	public Node3D BattleArea { get; set; }
 
+	[ExportGroup("Menu")]
 	//[Export]
 	//public string InterestItemResFolder { get; set; }
-	[Export]
-	public float InterestRotate
-	{
-		get { return _InterestRotate; }
-		set { _InterestRotate = Math.Clamp(value, -25f, 25f); }
-	}
+	[Export(PropertyHint.Range, "-5,5,0.25")]
+	public float InterestRotateSpeed { get; set; } = 2f;
 	[Export]
 	public Button ButtonBattle { get; set; }
 	[Export]
@@ -32,11 +30,13 @@ public partial class TheGame : Node
 	[Export]
 	public Button ButtonExit { get; set; }
 
-	private float _InterestRotate = 5f;
-	protected Node3D InterestItem { get; set; }
-
+	// Main
 	protected State CurrentState { get; set; }
 
+	// Menu
+	protected Node3D InterestItem { get; set; }
+
+	// Overrides
 	public override void _Ready()
 	{
 		//if (String.IsNullOrEmpty(InterestItemResFolder)) { InterestItemResFolder = "objects"; }
@@ -49,8 +49,8 @@ public partial class TheGame : Node
 		InterestItem.Name = "MainMenuInterestItem";
 		AddChild(InterestItem);
 
-		ButtonBattle.Pressed += LoadBattle;
-		//ButtonOptions.Pressed += ???;
+		ButtonBattle.Pressed += ButtonBattle_Trigger;
+		ButtonOptions.Pressed += ButtonOptions_Trigger;
 		ButtonExit.Pressed += ButtonExit_Trigger;
 
 		var LabelGame = GetNode<Label>("MainMenu/TopMenu/VBoxContainer/LabelGame");
@@ -73,7 +73,7 @@ public partial class TheGame : Node
 		{
 			if (InterestItem != null)
 			{
-				InterestItem.RotateObjectLocal(Vector3.Up, (float)delta * InterestRotate);
+				InterestItem.RotateObjectLocal(Vector3.Up, (float)delta * InterestRotateSpeed);
 			}
 		}
 		else if (CurrentState == State.Transition)
@@ -88,11 +88,17 @@ public partial class TheGame : Node
 			GetTree().Quit(); // default behavior
 	}
 
-	public void LoadBattle()
+	// Menu
+	public void ButtonBattle_Trigger()
 	{
 		
 		//var world_battle = GD.Load<PackedScene>("res://scenes/world_battle.tscn");
 		//GetTree().ChangeSceneToPacked(world_battle);
+	}
+
+	public void ButtonOptions_Trigger()
+	{
+
 	}
 
 	public void ButtonExit_Trigger()

@@ -10,10 +10,10 @@ background_color = Color(0, 0, 0.313726, 1)
 [node name="game" type="Node3D" node_paths=PackedStringArray("Overlay", "MainMenu", "BattleArea", "ButtonBattle", "ButtonOptions", "ButtonExit")]
 script = ExtResource("1_vonxe")
 GC = ExtResource("2_nl28y")
+InterestRotate = 2.0
 Overlay = NodePath("TransitionOverlay/Overlay")
 MainMenu = NodePath("MainMenu")
 BattleArea = NodePath("BattleArea")
-InterestRotate = 2.0
 ButtonBattle = NodePath("MainMenu/TopMenu/VBoxContainer/ButtonBattle")
 ButtonOptions = NodePath("MainMenu/TopMenu/VBoxContainer/ButtonOptions")
 ButtonExit = NodePath("MainMenu/TopMenu/VBoxContainer/ButtonExit")
