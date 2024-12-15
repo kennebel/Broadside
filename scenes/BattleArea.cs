@@ -2,8 +2,10 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class WorldBattle : Node3D
+public partial class BattleArea : Node3D
 {
+	[Export]
+	public TheGame TG { get; set; }
 	[Export]
 	public string TestObject { get; set; }
 	[Export]
@@ -22,26 +24,30 @@ public partial class WorldBattle : Node3D
 	[Export]
 	public Button ButtonMainMenu { get; set; }
 
-	private List<Node3D> LoadedObjects { get; set; }
+	protected List<Node3D> LoadedObjects { get; set; }
+	protected Node3D StarHolder { get; set; }
+	protected Node3D ObjectHolder { get; set; }
 
 	public override void _Ready()
 	{
+		StarHolder = GetNode<Node3D>("StarHolder");
+		ObjectHolder = GetNode<Node3D>("ObjectHolder");
+
 		LoadedObjects = new List<Node3D>();
 		GD.Randomize();
 
 		var star_scene = GD.Load<PackedScene>("res://objects/"+StarObject+".tscn");
 		Node3D temp_star;
-		var star_holder = GetNode("StarHolder");
 		for (int i = 0; i < 99; i++)
 		{
 			temp_star = star_scene.Instantiate<Node3D>();
 			temp_star.Name = "Star_"+i.ToString();
 			temp_star.Position = OnUnitSphere() * 25;
-			star_holder.AddChild(temp_star);
+			StarHolder.AddChild(temp_star);
 		}
 
 		ButtonSpawn.Pressed += SpawnIn;
-		ButtonClear.Pressed += CleanUp;
+		ButtonClear.Pressed += ClearObjects;
 		ButtonPause.Pressed += PauseBattle;
 		ButtonMainMenu.Pressed += ReturnToMainMenu;
 
@@ -68,20 +74,36 @@ public partial class WorldBattle : Node3D
 		LoadedObjects[1].Name = "Ship1";
 		LoadedObjects[1].Position = SpawnPos1.Position;
 
-		AddChild(LoadedObjects[0]);
-		AddChild(LoadedObjects[1]);
+		ObjectHolder.AddChild(LoadedObjects[0]);
+		ObjectHolder.AddChild(LoadedObjects[1]);
 	}
 
-	public void CleanUp()
+	public void ClearObjects()
 	{
-		foreach (var Item in LoadedObjects)
+		var children = ObjectHolder.GetChildren();
+		foreach (Node child in children)
 		{
-			RemoveChild(Item);
+			child.Free();
 		}
 		LoadedObjects.Clear();
 
 		ButtonSpawn.Disabled = false;
 		ButtonClear.Disabled = true;
+	}
+
+	public void ClearStars()
+	{
+		var children = StarHolder.GetChildren();
+		foreach (Node child in children)
+		{
+			child.Free();
+		}
+	}
+
+	public void ClearAll()
+	{
+		ClearObjects();
+		ClearStars();
 	}
 
 	public void PauseBattle()
@@ -91,8 +113,8 @@ public partial class WorldBattle : Node3D
 
 	public void ReturnToMainMenu()
 	{
-		var main_menu = GD.Load<PackedScene>("res://scenes/main_menu.tscn");
-		GetTree().ChangeSceneToPacked(main_menu);
+		ClearObjects();
+		TG.BattleMainMenu_Trigger();
 	}
 
 	static public Vector3 OnUnitSphere()

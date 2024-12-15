@@ -36,7 +36,6 @@ public partial class TransitionOverlay : CanvasLayer
 		if (!IsRunning) { return; }
 
 		ElapsedDuration += (float)delta;
-		//GD.Print(String.Format("Animation Elapsed: {0}", ElapsedDuration));
 
 		if (ElapsedDurationPercent == 1f)
 		{
@@ -51,12 +50,10 @@ public partial class TransitionOverlay : CanvasLayer
 		if (!ReachedHalf)
 		{
 			Overlay.Color = StartColor.Lerp(EndColor, ElapsedDurationPercent*2f);
-			//GD.Print(String.Format("First %: {0}, {1}", ElapsedDurationPercent, ElapsedDurationPercent*2f));
 		}
 		else
 		{
 			Overlay.Color = EndColor.Lerp(StartColor, (ElapsedDurationPercent-0.5f)*2f);
-			//GD.Print(String.Format("Secnd %: {0}, {1}", ElapsedDurationPercent, (ElapsedDurationPercent-0.5f)*2f));
 		}
 	}
 
@@ -67,8 +64,6 @@ public partial class TransitionOverlay : CanvasLayer
 		RunDuration = Math.Clamp(duration, 0.1f, 30f);
 
 		IsRunning = true;
-
-		//GD.Print(String.Format("Colors: {0}, {1}", StartColor.ToString(), EndColor.ToString()));
 	}
 
 	protected void Reset()
