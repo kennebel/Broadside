@@ -9,6 +9,14 @@ public partial class TheGame : Node
 	[ExportGroup("Main")]
 	[Export]
 	public Resource GC { get; set; }
+	protected GameConfig TheConfig
+	{
+		get
+		{
+			if (GC is GameConfig gc) { return gc; }
+			return null;
+		}
+	}
 
 	[Export]
 	public Node3D MainMenu { get; set; }
@@ -44,18 +52,20 @@ public partial class TheGame : Node
 	protected CanvasLayer TopMenu { get; set; }
 	protected CanvasLayer OptionsMenu { get; set; }
 	protected CanvasLayer BattleMenu { get; set; }
+	protected LineEdit OptionsPlayerName { get; set; }
 
 	// Overrides
 	public override void _Ready()
 	{
-		var LabelGame = GetNode<Label>("MainMenu/TopMenu/VBoxContainer/LabelGame");
-		var LabelPlayer = GetNode<Label>("MainMenu/TopMenu/VBoxContainer/LabelPlayer");
-		var LabelVersion = GetNode<Label>("MainMenu/TopMenu/VBoxContainer/LabelVersion");
+		var LabelGame = GetNode<Label>("MainMenu/TopMenu/VBoxMain/LabelGame");
+		var LabelPlayer = GetNode<Label>("MainMenu/TopMenu/VBoxMain/LabelPlayer");
+		var LabelVersion = GetNode<Label>("MainMenu/TopMenu/VBoxMain/LabelVersion");
 		Overlay = GetNode<TransitionOverlay>("TransitionOverlay");
 		OverlayVisual = GetNode<CanvasLayer>("TransitionOverlay");
 		TopMenu = GetNode<CanvasLayer>("MainMenu/TopMenu");
 		OptionsMenu = GetNode<CanvasLayer>("MainMenu/OptionsMenu");
 		BattleMenu = GetNode<CanvasLayer>("BattleMenu");
+		OptionsPlayerName = GetNode<LineEdit>("MainMenu/OptionsMenu/VBoxOptions/HBoxPlayer/OptionsPlayerName");
 
 		CameraStart = MainCameraRig.Transform;
 		//if (String.IsNullOrEmpty(InterestItemResFolder)) { InterestItemResFolder = "objects"; }
@@ -68,17 +78,19 @@ public partial class TheGame : Node
 		InterestItem.Name = "MainMenuInterestItem";
 		MainMenu.AddChild(InterestItem);
 
+		if (GC is GameConfig gc)
+		{
+			LabelGame.Text = GameConfig.GameName;
+			LabelPlayer.Text = String.Format("Player: {0}", String.IsNullOrEmpty(gc.PlayerName) ? "<setup in options>" : gc.PlayerName);
+			OptionsPlayerName.Text = String.IsNullOrEmpty(gc.PlayerName) ? "" : gc.PlayerName;
+			LabelVersion.Text = String.Format("Version: {0}", GameConfig.GameVersion);
+		}
+
 		ButtonBattle.Pressed += ButtonBattle_Trigger;
 		ButtonOptions.Pressed += ButtonOptions_Trigger;
 		ButtonExit.Pressed += ButtonExit_Trigger;
 		ButtonOptionsHome.Pressed += ButtonOptionsHome_Trigger;
-
-		if (GC is GameConfig gc)
-		{
-			LabelGame.Text = GameConfig.GameName;
-			LabelPlayer.Text = String.Format("Player: {0}", String.IsNullOrEmpty(gc.PlayerName) ? "<setup in Options>" : gc.PlayerName);
-			LabelVersion.Text = String.Format("Version: {0}", GameConfig.GameVersion);
-		}
+		OptionsPlayerName.TextChanged += OptionsPlayerName_TextChanged;
 
 		CurrentState = State.Menu;
 	}
@@ -137,6 +149,11 @@ public partial class TheGame : Node
 		CurrentState = State.Transition;
 		OverlayVisual.Visible = true;
 		Overlay.StartAnimation(OverlayAnimationEnd, OverlayAnimationHalf, OverlayAnimationDuration);
+	}
+
+	public void OptionsPlayerName_TextChanged(string newText)
+	{
+		TheConfig.PlayerName = newText;
 	}
 
 	// Events

@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://3lwepav3xdjv"]
+[gd_scene load_steps=8 format=3 uid="uid://3lwepav3xdjv"]
 
 [ext_resource type="Script" path="res://scenes/TheGame.cs" id="1_vonxe"]
 [ext_resource type="Resource" uid="uid://8l3vlciaiv6a" path="res://scripts/Data/game_config.tres" id="2_nl28y"]
 [ext_resource type="Script" path="res://scenes/menus/TransitionOverlay.cs" id="3_c33cj"]
 [ext_resource type="Script" path="res://scenes/BattleArea.cs" id="4_8catq"]
+[ext_resource type="Theme" uid="uid://d2c2fve6mh2jm" path="res://scenes/menus/MainTheme.tres" id="4_v2j0f"]
 
 [sub_resource type="Environment" id="Environment_5mjmb"]
 background_mode = 1
@@ -17,10 +18,11 @@ GC = ExtResource("2_nl28y")
 MainMenu = NodePath("MainMenu")
 BattleArea = NodePath("BattleArea")
 MainCameraRig = NodePath("CameraRig")
-ButtonBattle = NodePath("MainMenu/TopMenu/VBoxContainer/ButtonBattle")
-ButtonOptions = NodePath("MainMenu/TopMenu/VBoxContainer/ButtonOptions")
-ButtonExit = NodePath("MainMenu/TopMenu/VBoxContainer/ButtonExit")
-ButtonOptionsHome = NodePath("MainMenu/OptionsMenu/VBoxContainer/ButtonOptionsHome")
+OverlayAnimationDuration = 6.0
+ButtonBattle = NodePath("MainMenu/TopMenu/VBoxMain/ButtonBattle")
+ButtonOptions = NodePath("MainMenu/TopMenu/VBoxMain/ButtonOptions")
+ButtonExit = NodePath("MainMenu/TopMenu/VBoxMain/ButtonExit")
+ButtonOptionsHome = NodePath("MainMenu/OptionsMenu/VBoxOptions/ButtonOptionsHome")
 
 [node name="TransitionOverlay" type="CanvasLayer" parent="."]
 layer = 2
@@ -39,7 +41,7 @@ color = Color(0, 0, 0, 0)
 
 [node name="TopMenu" type="CanvasLayer" parent="MainMenu"]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/TopMenu"]
+[node name="VBoxMain" type="VBoxContainer" parent="MainMenu/TopMenu"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -52,33 +54,33 @@ offset_bottom = 91.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LabelGame" type="Label" parent="MainMenu/TopMenu/VBoxContainer"]
+[node name="LabelGame" type="Label" parent="MainMenu/TopMenu/VBoxMain"]
 layout_mode = 2
 text = "Broadside"
 
-[node name="LabelPlayer" type="Label" parent="MainMenu/TopMenu/VBoxContainer"]
+[node name="LabelPlayer" type="Label" parent="MainMenu/TopMenu/VBoxMain"]
 layout_mode = 2
 
-[node name="ButtonBattle" type="Button" parent="MainMenu/TopMenu/VBoxContainer"]
+[node name="ButtonBattle" type="Button" parent="MainMenu/TopMenu/VBoxMain"]
 layout_mode = 2
 text = "Battle!"
 
-[node name="ButtonOptions" type="Button" parent="MainMenu/TopMenu/VBoxContainer"]
+[node name="ButtonOptions" type="Button" parent="MainMenu/TopMenu/VBoxMain"]
 layout_mode = 2
 text = "Options"
 
-[node name="ButtonExit" type="Button" parent="MainMenu/TopMenu/VBoxContainer"]
+[node name="ButtonExit" type="Button" parent="MainMenu/TopMenu/VBoxMain"]
 layout_mode = 2
 text = "Exit"
 
-[node name="LabelVersion" type="Label" parent="MainMenu/TopMenu/VBoxContainer"]
+[node name="LabelVersion" type="Label" parent="MainMenu/TopMenu/VBoxMain"]
 layout_mode = 2
 text = "Version 0.1"
 
 [node name="OptionsMenu" type="CanvasLayer" parent="MainMenu"]
 visible = false
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/OptionsMenu"]
+[node name="VBoxOptions" type="VBoxContainer" parent="MainMenu/OptionsMenu"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -91,14 +93,27 @@ offset_bottom = 91.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LabelOptions" type="Label" parent="MainMenu/OptionsMenu/VBoxContainer"]
+[node name="LabelOptions" type="Label" parent="MainMenu/OptionsMenu/VBoxOptions"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.0980392, 0.882353, 0.0980392, 1)
+theme_override_font_sizes/font_size = 20
 text = "Options"
+horizontal_alignment = 1
 
-[node name="TextEdit" type="TextEdit" parent="MainMenu/OptionsMenu/VBoxContainer"]
+[node name="HBoxPlayer" type="HBoxContainer" parent="MainMenu/OptionsMenu/VBoxOptions"]
 layout_mode = 2
 
-[node name="ButtonOptionsHome" type="Button" parent="MainMenu/OptionsMenu/VBoxContainer"]
+[node name="Label" type="Label" parent="MainMenu/OptionsMenu/VBoxOptions/HBoxPlayer"]
+layout_mode = 2
+text = "Name:"
+
+[node name="OptionsPlayerName" type="LineEdit" parent="MainMenu/OptionsMenu/VBoxOptions/HBoxPlayer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme = ExtResource("4_v2j0f")
+placeholder_text = "<player name>"
+
+[node name="ButtonOptionsHome" type="Button" parent="MainMenu/OptionsMenu/VBoxOptions"]
 layout_mode = 2
 text = "Home"
 
