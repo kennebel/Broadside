@@ -36,15 +36,7 @@ public partial class BattleArea : Node3D
 		LoadedObjects = new List<Node3D>();
 		GD.Randomize();
 
-		var star_scene = GD.Load<PackedScene>("res://objects/"+StarObject+".tscn");
-		Node3D temp_star;
-		for (int i = 0; i < 99; i++)
-		{
-			temp_star = star_scene.Instantiate<Node3D>();
-			temp_star.Name = "Star_"+i.ToString();
-			temp_star.Position = OnUnitSphere() * 25;
-			StarHolder.AddChild(temp_star);
-		}
+		CreateStarBackdrop();
 
 		ButtonSpawn.Pressed += SpawnIn;
 		ButtonClear.Pressed += ClearObjects;
@@ -76,6 +68,19 @@ public partial class BattleArea : Node3D
 
 		ObjectHolder.AddChild(LoadedObjects[0]);
 		ObjectHolder.AddChild(LoadedObjects[1]);
+	}
+
+	public void CreateStarBackdrop()
+	{
+		var star_scene = GD.Load<PackedScene>("res://objects/"+StarObject+".tscn");
+		Node3D temp_star;
+		for (int i = 0; i < 99; i++)
+		{
+			temp_star = star_scene.Instantiate<Node3D>();
+			temp_star.Name = "Star_"+i.ToString();
+			temp_star.Position = OnUnitSphere() * 25;
+			StarHolder.AddChild(temp_star);
+		}
 	}
 
 	public void ClearObjects()
@@ -113,7 +118,7 @@ public partial class BattleArea : Node3D
 
 	public void ReturnToMainMenu()
 	{
-		ClearObjects();
+		//ClearObjects();
 		TG.BattleMainMenu_Trigger();
 	}
 

@@ -12,11 +12,11 @@ background_color = Color(0, 0, 0.313726, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_iieru"]
 
-[node name="game" type="Node3D" node_paths=PackedStringArray("MainMenu", "BattleArea", "MainCameraRig", "ButtonBattle", "ButtonOptions", "ButtonExit", "ButtonOptionsHome")]
+[node name="game" type="Node3D" node_paths=PackedStringArray("MainMenu", "BattleAreaRig", "MainCameraRig", "ButtonBattle", "ButtonOptions", "ButtonExit", "ButtonOptionsHome")]
 script = ExtResource("1_vonxe")
 GC = ExtResource("2_nl28y")
 MainMenu = NodePath("MainMenu")
-BattleArea = NodePath("BattleArea")
+BattleAreaRig = NodePath("BattleAreaRig")
 MainCameraRig = NodePath("CameraRig")
 OverlayAnimationDuration = 6.0
 ButtonBattle = NodePath("MainMenu/TopMenu/VBoxMain/ButtonBattle")
@@ -64,6 +64,10 @@ layout_mode = 2
 [node name="ButtonBattle" type="Button" parent="MainMenu/TopMenu/VBoxMain"]
 layout_mode = 2
 text = "Battle!"
+
+[node name="ButtonQuickBattle" type="Button" parent="MainMenu/TopMenu/VBoxMain"]
+layout_mode = 2
+text = "Quick Battle!"
 
 [node name="ButtonOptions" type="Button" parent="MainMenu/TopMenu/VBoxMain"]
 layout_mode = 2
@@ -154,7 +158,7 @@ environment = SubResource("Environment_5mjmb")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="CameraRig"]
 
-[node name="BattleArea" type="Node3D" parent="." node_paths=PackedStringArray("TG", "SpawnPos0", "SpawnPos1", "ButtonSpawn", "ButtonClear", "ButtonPause", "ButtonMainMenu")]
+[node name="BattleAreaRig" type="Node3D" parent="." node_paths=PackedStringArray("TG", "SpawnPos0", "SpawnPos1", "ButtonSpawn", "ButtonClear", "ButtonPause", "ButtonMainMenu")]
 visible = false
 script = ExtResource("4_8catq")
 TG = NodePath("..")
@@ -167,22 +171,22 @@ ButtonClear = NodePath("../BattleMenu/HBoxContainer/ButtonClear")
 ButtonPause = NodePath("../BattleMenu/HBoxContainer/ButtonPause")
 ButtonMainMenu = NodePath("../BattleMenu/HBoxContainer/ButtonMainMenu")
 
-[node name="StarHolder" type="Node3D" parent="BattleArea"]
+[node name="StarHolder" type="Node3D" parent="BattleAreaRig"]
 
-[node name="ObjectHolder" type="Node3D" parent="BattleArea"]
+[node name="ObjectHolder" type="Node3D" parent="BattleAreaRig"]
 
-[node name="AdminHolder" type="Node3D" parent="BattleArea"]
+[node name="AdminHolder" type="Node3D" parent="BattleAreaRig"]
 
-[node name="SpawnPos0" type="Node3D" parent="BattleArea/AdminHolder"]
+[node name="SpawnPos0" type="Node3D" parent="BattleAreaRig/AdminHolder"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 0)
 visible = false
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="BattleArea/AdminHolder/SpawnPos0"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="BattleAreaRig/AdminHolder/SpawnPos0"]
 mesh = SubResource("SphereMesh_iieru")
 
-[node name="SpawnPos1" type="Node3D" parent="BattleArea/AdminHolder"]
+[node name="SpawnPos1" type="Node3D" parent="BattleAreaRig/AdminHolder"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, 0)
 visible = false
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="BattleArea/AdminHolder/SpawnPos1"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="BattleAreaRig/AdminHolder/SpawnPos1"]
 mesh = SubResource("SphereMesh_iieru")

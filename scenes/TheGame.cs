@@ -21,7 +21,7 @@ public partial class TheGame : Node
 	[Export]
 	public Node3D MainMenu { get; set; }
 	[Export]
-	public Node3D BattleArea { get; set; }
+	public Node3D BattleAreaRig { get; set; }
 	[Export]
 	public Node3D MainCameraRig { get; set; }
 
@@ -165,7 +165,7 @@ public partial class TheGame : Node
 			MainMenu.Visible = false;
 			TopMenu.Visible = false;
 			BattleMenu.Visible = true;
-			BattleArea.Visible = true;
+			BattleAreaRig.Visible = true;
 			
 			// Change State
 			CurrentState = State.Battle;
@@ -177,7 +177,9 @@ public partial class TheGame : Node
 			MainMenu.Visible = true;
 			TopMenu.Visible = true;
 			BattleMenu.Visible = false;
-			BattleArea.Visible = false;
+			BattleAreaRig.Visible = false;
+
+			((BattleArea)BattleAreaRig).ClearObjects();
 
 			// Change State
 			CurrentState = State.Menu;
