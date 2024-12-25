@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://ddgq62qk556rg"]
+
+[ext_resource type="Material" uid="uid://dh8n0qm6hoe8i" path="res://materials/BaseGrey.tres" id="1_mivt7"]
+[ext_resource type="Material" uid="uid://d2amv4s08v3rm" path="res://materials/BaseEngine.tres" id="2_ct6ae"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ypk0o"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_wdnwd"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u283c"]
+
+[node name="Rocket" type="RigidBody3D"]
+collision_layer = 16
+collision_mask = 20
+
+[node name="Visual" type="Node3D" parent="."]
+
+[node name="Body" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(0.1, 0, 0, 0, -4.37114e-09, -0.1, 0, 0.1, -4.37114e-09, 0, 0, 0)
+material_override = ExtResource("1_mivt7")
+mesh = SubResource("CylinderMesh_ypk0o")
+
+[node name="Engine" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(0.08, 0, 0, 0, 0.08, 0, 0, 0, 0.04, 0, 0.00990569, 0.110642)
+material_override = ExtResource("2_ct6ae")
+mesh = SubResource("PrismMesh_wdnwd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.15, 0, 0, 0, -6.55671e-09, -0.15, 0, 0.15, -6.55671e-09, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_u283c")

@@ -1,0 +1,84 @@
+[gd_scene load_steps=7 format=3 uid="uid://d07ap5laee031"]
+
+[ext_resource type="Material" uid="uid://d2amv4s08v3rm" path="res://materials/BaseEngine.tres" id="1_kv76d"]
+[ext_resource type="Material" uid="uid://c6ssl1vtbn022" path="res://materials/BaseAccessory.tres" id="2_a7b5x"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_m100g"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_3skfc"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_i7j7s"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j1kpf"]
+
+[node name="ShipBasicA" type="RigidBody3D"]
+
+[node name="Visual" type="Node3D" parent="."]
+
+[node name="Body" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(10, 0, 0, 0, -4.37114e-07, -3, 0, 10, -1.31134e-07, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_m100g")
+
+[node name="Engine1" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-1.09278e-07, -2.5, 0, 2.5, -1.09278e-07, 0, 0, 0, 1.25, -1.8, 0, 9.50183)
+material_override = ExtResource("1_kv76d")
+mesh = SubResource("PrismMesh_3skfc")
+
+[node name="Engine2" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-1.09278e-07, 2.5, 0, -2.5, -1.09278e-07, 0, 0, 0, 1.25, 1.8, 0, 9.50183)
+material_override = ExtResource("1_kv76d")
+mesh = SubResource("PrismMesh_3skfc")
+skeleton = NodePath("../Engine1")
+
+[node name="Nose" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 6, 0, 0, -12.8374)
+material_override = ExtResource("2_a7b5x")
+mesh = SubResource("BoxMesh_i7j7s")
+
+[node name="Internals" type="Node3D" parent="."]
+
+[node name="MountPoints" type="Node3D" parent="."]
+
+[node name="TurretTop" type="Node3D" parent="MountPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+metadata/TurretRange = 7.0
+metadata/TurretType = "TopBottom"
+
+[node name="TurretBottom" type="Node3D" parent="MountPoints"]
+transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, -1.5, 0)
+metadata/TurrentRange = 7.0
+metadata/TurretType = "TopBottom"
+
+[node name="TurretSideL1" type="Node3D" parent="MountPoints"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5, 0, -5)
+metadata/TurretRange = 0.78
+metadata/TurretType = "Side"
+
+[node name="TurretSideL2" type="Node3D" parent="MountPoints"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5, 0, 0)
+metadata/TurretRange = 0.78
+metadata/TurretType = "Side"
+
+[node name="TurretSideL3" type="Node3D" parent="MountPoints"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5, 0, 5)
+metadata/TurretRange = 0.78
+metadata/TurretType = "Side"
+
+[node name="TurretSideR1" type="Node3D" parent="MountPoints"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5, 0, -5)
+metadata/TurretRange = 0.78
+metadata/TurretType = "Side"
+
+[node name="TurretSideR2" type="Node3D" parent="MountPoints"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5, 0, 0)
+metadata/TurretRange = 0.78
+metadata/TurretType = "Side"
+
+[node name="TurretSideR3" type="Node3D" parent="MountPoints"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5, 0, 5)
+metadata/TurretRange = 0.78
+metadata/TurretType = "Side"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(11, 0, 0, 0, -4.80825e-07, -3.5, 0, 11, -1.5299e-07, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_j1kpf")

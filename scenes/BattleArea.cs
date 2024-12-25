@@ -18,6 +18,8 @@ public partial class BattleArea : Node3D
 	[Export]
 	public Button ButtonSpawn { get; set; }
 	[Export]
+	public Button ButtonSpawnTurrets { get; set; }
+	[Export]
 	public Button ButtonClear { get; set; }
 	[Export]
 	public Button ButtonPause { get; set; }
@@ -27,32 +29,46 @@ public partial class BattleArea : Node3D
 	protected List<Node3D> LoadedObjects { get; set; }
 	protected Node3D StarHolder { get; set; }
 	protected Node3D ObjectHolder { get; set; }
+	protected Transform3D CameraBattleStart { get; set; }
+	protected Node3D CameraRig { get; set; }
 
 	public override void _Ready()
 	{
 		StarHolder = GetNode<Node3D>("StarHolder");
 		ObjectHolder = GetNode<Node3D>("ObjectHolder");
+		CameraBattleStart = GetNode<Node3D>("AdminHolder/CameraBattleStart").Transform;
 
 		LoadedObjects = new List<Node3D>();
 		GD.Randomize();
 
-		CreateStarBackdrop();
-
 		ButtonSpawn.Pressed += SpawnIn;
+		ButtonSpawnTurrets.Pressed += SpawnInTurrets;
 		ButtonClear.Pressed += ClearObjects;
 		ButtonPause.Pressed += PauseBattle;
 		ButtonMainMenu.Pressed += ReturnToMainMenu;
-
-		ButtonClear.Disabled = true;
 	}
 
 	public override void _Process(double delta)
 	{
 	}
 
+	public void BattleLoad(Node3D cameraRig)
+	{
+		CameraRig = cameraRig;
+
+		CreateStarBackdrop();
+		CameraRig.Transform = CameraBattleStart;
+	}
+
+	public void BattleDone()
+	{
+		ClearAll();
+	}
+
 	public void SpawnIn()
 	{
 		ButtonSpawn.Disabled = true;
+		ButtonSpawnTurrets.Disabled = false;
 		ButtonClear.Disabled = false;
 
 		var scene = GD.Load<PackedScene>("res://objects/"+TestObject+".tscn");
@@ -70,6 +86,11 @@ public partial class BattleArea : Node3D
 		ObjectHolder.AddChild(LoadedObjects[1]);
 	}
 
+	public void SpawnInTurrets()
+	{
+
+	}
+
 	public void CreateStarBackdrop()
 	{
 		var star_scene = GD.Load<PackedScene>("res://objects/"+StarObject+".tscn");
@@ -78,7 +99,7 @@ public partial class BattleArea : Node3D
 		{
 			temp_star = star_scene.Instantiate<Node3D>();
 			temp_star.Name = "Star_"+i.ToString();
-			temp_star.Position = OnUnitSphere() * 25;
+			temp_star.Position = OnUnitSphere() * 50;
 			StarHolder.AddChild(temp_star);
 		}
 	}
@@ -93,6 +114,7 @@ public partial class BattleArea : Node3D
 		LoadedObjects.Clear();
 
 		ButtonSpawn.Disabled = false;
+		ButtonSpawnTurrets.Disabled = true;
 		ButtonClear.Disabled = true;
 	}
 

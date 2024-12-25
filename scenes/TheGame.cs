@@ -167,6 +167,8 @@ public partial class TheGame : Node
 			BattleMenu.Visible = true;
 			BattleAreaRig.Visible = true;
 			
+			((BattleArea)BattleAreaRig).BattleLoad(MainCameraRig);
+
 			// Change State
 			CurrentState = State.Battle;
 		}
@@ -179,7 +181,7 @@ public partial class TheGame : Node
 			BattleMenu.Visible = false;
 			BattleAreaRig.Visible = false;
 
-			((BattleArea)BattleAreaRig).ClearObjects();
+			((BattleArea)BattleAreaRig).BattleDone();
 
 			// Change State
 			CurrentState = State.Menu;
