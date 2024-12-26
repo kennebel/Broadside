@@ -88,7 +88,8 @@ public partial class BattleArea : Node3D
 
 	public void SpawnInTurrets()
 	{
-
+		var turretRocketFull = GD.Load<PackedScene>("res://objects/weapons/turret_rocket_full.tscn");
+		var turretRocketSide = GD.Load<PackedScene>("res://objects/weapons/turret_rocket_side.tscn");
 	}
 
 	public void CreateStarBackdrop()

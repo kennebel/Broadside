@@ -12,11 +12,13 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j1kpf"]
 
 [node name="ShipBasicA" type="RigidBody3D"]
+collision_layer = 4
+collision_mask = 31
 
 [node name="Visual" type="Node3D" parent="."]
 
 [node name="Body" type="MeshInstance3D" parent="Visual"]
-transform = Transform3D(10, 0, 0, 0, -4.37114e-07, -3, 0, 10, -1.31134e-07, 0, 0, 0)
+transform = Transform3D(10, 0, 0, 0, -4.37114e-07, -5, 0, 10, -2.18557e-07, 0, 0, 0)
 mesh = SubResource("CapsuleMesh_m100g")
 
 [node name="Engine1" type="MeshInstance3D" parent="Visual"]
@@ -40,12 +42,12 @@ mesh = SubResource("BoxMesh_i7j7s")
 [node name="MountPoints" type="Node3D" parent="."]
 
 [node name="TurretTop" type="Node3D" parent="MountPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
 metadata/TurretRange = 7.0
 metadata/TurretType = "TopBottom"
 
 [node name="TurretBottom" type="Node3D" parent="MountPoints"]
-transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, -1.5, 0)
+transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, -2.5, 0)
 metadata/TurrentRange = 7.0
 metadata/TurretType = "TopBottom"
 
@@ -80,5 +82,5 @@ metadata/TurretRange = 0.78
 metadata/TurretType = "Side"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(11, 0, 0, 0, -4.80825e-07, -3.5, 0, 11, -1.5299e-07, 0, 0, 0)
+transform = Transform3D(11, 0, 0, 0, -4.80825e-07, -11, 0, 11, -4.80825e-07, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_j1kpf")
